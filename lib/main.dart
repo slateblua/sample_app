@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
+import 'package:sample_app/home/home_list/data/home_repository.dart';
+import 'package:sample_app/home/home_list/presentation/home_bloc.dart';
+import 'package:sample_app/home/home_list/presentation/home_list.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,7 +35,10 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: BlocProvider(
+        create: (context) => HomeBloc(HomeRepositoryImpl(Client())),
+        child: HomeListWidget(),
+      ),
     );
   }
 }
